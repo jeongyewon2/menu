@@ -1,53 +1,57 @@
-# 한밭대학교 학생생활관 식단표 조회 프로그램 (Hanbat National University Dormitory Meal Schedule Viewer)
+# 한밭대학교 학생생활관 식단표 조회 프로그램
 
 ---
 
-## Abstract
+## 개요 (Abstract)
 
-The **Hanbat National University Dormitory Meal Schedule Viewer** is a Python-based desktop application developed to address the inconvenience faced by dormitory residents who need to check weekly meal schedules posted on the university's official dormitory website. Rather than requiring students to navigate a web browser and manually parse HTML-rendered tables each time, this program automates the entire workflow via real-time web scraping (using `requests` and `BeautifulSoup`) and presents the extracted data in a clean, interactive GUI window built with Python's standard `tkinter` library. The application eliminates the friction of repeated manual lookups and provides an intuitive interface optimized for quick meal-planning decisions.
-
----
-
-## Key Features
-
-- **Real-Time Web Scraping** — Fetches the latest weekly meal schedule directly from the official dormitory website (`dorm.hanbat.ac.kr`) on every launch, ensuring the displayed information is always up to date.
-
-- **Automatic Day Detection** — On startup, the program automatically detects the current day of the week from the system clock and immediately displays the corresponding menu without requiring any user input.
-
-- **Interactive Day Selection** — A drop-down combo box allows users to freely switch between Monday through Sunday to browse the full weekly menu at their convenience.
-
-- **Robust Error Handling** — Network failures, server timeouts, vacation periods, and missing table data are gracefully caught with `try-except` blocks. User-friendly warning and error dialog boxes (`messagebox`) are displayed instead of program crashes.
-
-- **Clean & Readable Output** — All raw HTML tags are stripped via BeautifulSoup's parser, and extraneous whitespace is normalized. Menu items are formatted with bullet points under clearly labeled meal periods (Breakfast / Lunch / Dinner) inside a scrollable text widget.
+**한밭대학교 학생생활관 식단표 조회 프로그램**은 생활관 입주생이 매주 갱신되는 학생생활관 식단을 보다 편리하게 확인할 수 있도록 개발된 Python 기반 데스크톱 애플리케이션이다. 기존에는 웹브라우저를 통해 공식 홈페이지에 접속한 뒤 HTML 테이블을 직접 확인해야 했으나, 본 프로그램은 `requests`와 `BeautifulSoup`를 이용한 실시간 웹 스크래핑을 통해 식단 데이터를 자동으로 수집하고, Python 표준 GUI 라이브러리인 `tkinter`를 활용하여 직관적인 사용자 인터페이스로 제공한다. 이를 통해 반복적인 수동 조회의 불편함을 해소하고 신속한 식단 확인이 가능하도록 설계하였다.
 
 ---
 
-## Getting Started
+## 주요 기능 (Key Features)
 
-### Prerequisites
+- **실시간 식단 크롤링** — 프로그램 실행 시 한밭대학교 학생생활관 공식 웹사이트(`dorm.hanbat.ac.kr`)에 접속하여 최신 주간 식단표를 실시간으로 불러온다.
 
-- **Python 3.9 or higher** installed on your system.  
-  Download from [python.org](https://www.python.org/downloads/) if not already installed.
-- An active internet connection (required for the initial data fetch).
+- **오늘 요일 자동 인식** — 시스템 시계를 기반으로 현재 요일을 자동 감지하여, 사용자가 별도로 선택하지 않아도 오늘의 식단을 먼저 출력한다.
 
-### Installation & Setup
+- **요일 선택 드롭다운** — 콤보박스(Combobox)를 통해 월요일부터 일요일까지 원하는 요일을 자유롭게 선택하며 식단을 조회할 수 있다.
 
-1. **Clone or download this repository**
+- **견고한 예외 처리** — 네트워크 장애, 서버 타임아웃, 방학 기간으로 인한 데이터 부재 등 다양한 예외 상황을 `try-except`로 처리하여 프로그램이 비정상 종료되지 않도록 방지하며, `messagebox`를 통해 사용자에게 직관적인 안내 메시지를 제공한다.
+
+- **가독성 높은 출력** — BeautifulSoup 파서로 모든 HTML 태그를 제거하고 불필요한 공백을 정규화하여, 아침/점심/저녁 구분 아래 항목별로 깔끔하게 정리된 텍스트를 출력한다.
+
+---
+
+## 시작하기 (Getting Started)
+
+### 사전 요구사항 (Prerequisites)
+
+- **Python 3.9 이상**이 시스템에 설치되어 있어야 한다.  
+  [python.org](https://www.python.org/downloads/)에서 다운로드할 수 있다.
+- 인터넷 연결이 필요하다 (식단 데이터 실시간 수집을 위함).
+- Linux 사용자의 경우 tkinter 설치가 필요할 수 있다:
+  ```bash
+  sudo apt install python3-tk   # Ubuntu/Debian
+  ```
+
+### 설치 방법 (Installation & Setup)
+
+1. **저장소 복제 또는 다운로드**
 
    ```bash
    git clone https://github.com/YOUR_USERNAME/hanbat-dorm-meal-viewer.git
    cd hanbat-dorm-meal-viewer
    ```
 
-   > If you do not use Git, download the ZIP archive from GitHub, extract it, and open a terminal in the extracted directory.
+   > Git을 사용하지 않는 경우 GitHub에서 ZIP 파일을 다운로드하여 압축을 풀고 터미널에서 해당 디렉터리로 이동한다.
 
-2. **Create a virtual environment (recommended)**
+2. **가상 환경 생성 (권장)**
 
    ```bash
    python -m venv venv
    ```
 
-   Activate the environment:
+   가상 환경 활성화:
 
    - **Windows (Command Prompt)**
      ```bash
@@ -58,18 +62,18 @@ The **Hanbat National University Dormitory Meal Schedule Viewer** is a Python-ba
      source venv/bin/activate
      ```
 
-3. **Install dependencies**
+3. **의존성 패키지 설치**
 
    ```bash
    pip install -r requirements.txt
    ```
 
-   This installs `requests` (HTTP client) and `beautifulsoup4` (HTML parser) at their latest stable versions.
+   위 명령어로 `requests`(HTTP 클라이언트)와 `beautifulsoup4`(HTML 파서)가 최신 안정화 버전으로 설치된다.
 
-### Run
+### 실행 방법 (Run)
 
 ```bash
 python main.py
 ```
 
-A GUI window titled **"한밭대학교 학생생활관 식단표"** will open. The current day's menu is displayed automatically. Use the drop-down menu to switch between days, or click **"새로고침"** (Refresh) to re-fetch the data from the server.
+**"한밭대학교 학생생활관 식단표"** 제목의 GUI 창이 열린다. 실행 즉시 오늘 요일에 해당하는 식단이 자동으로 표시되며, 드롭다운 메뉴로 다른 요일을 선택하거나 **"새로고침"** 버튼을 눌러 데이터를 다시 불러올 수 있다.
